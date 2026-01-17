@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para la persona más especial XD✨</title>
+
+<style>
+body {
+    margin: 0;
+    background: radial-gradient(circle at center, #020617, #000);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: system-ui;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Luz suave */
+.aura {
+    position: absolute;
+    width: 90vw;
+    max-width: 600px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(253,230,138,.22), transparent 70%);
+    filter: blur(14px);
+}
+
+/* Contenedor SVG responsivo */
+.svg-container {
+    width: 100%;
+    max-width: 650px;
+    height: auto;
+}
+
+.svg-container svg {
+    width: 100%;
+    height: auto;
+}
+
+/* Animación estrella: MANO → FRENTE */
+@keyframes entregar {
+    0% {
+        transform: translate(0,0);
+        opacity: 0;
+    }
+    20% { opacity: 1; }
+    70% {
+        transform: translate(100px, -80px);
+    }
+    100% {
+        transform: translate(112px, -80px);
+    }
+}
+
+.estrella {
+    animation: entregar 4s ease-out forwards;
+}
+
+/* Brillo frente */
+@keyframes pulso {
+    0%,100% { opacity: .6; }
+    50% { opacity: 0.2; }
+}
+
+.brillo {
+    animation: pulso 2s ease-in-out infinite;
+}
+
+/* Mensaje */
+.mensaje {
+    position: absolute;
+    bottom: 20px;
+    color: #fde68a;
+    font-size: 16px;
+    opacity: 0;
+    animation: aparecer 2s ease forwards;
+    animation-delay: 3.5s;
+    text-align: center;
+    padding: 0 20px;
+    max-width: 90%;
+}
+
+.mensaje p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+@keyframes aparecer {
+    to { opacity: 1; }
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 640px) {
+    .mensaje {
+        font-size: 14px;
+        bottom: 10px;
+    }
+    
+    .aura {
+        height: 200px;
+    }
+}
+
+@media (max-width: 400px) {
+    .mensaje {
+        font-size: 13px;
+    }
+    
+    .mensaje br {
+        display: none;
+    }
+}
+
+/* Ajuste para pantallas muy anchas */
+@media (min-width: 1200px) {
+    .mensaje {
+        font-size: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="aura"></div>
+
+<div class="svg-container">
+<svg width="650" height="360" viewBox="0 0 640 360" shape-rendering="crispEdges" preserveAspectRatio="xMidYMid meet">
+
+<!-- PERSONA IZQUIERDA -->
+<g fill="#ffffff">
+    <!-- cabeza -->
+    <rect x="150" y="72" width="36" height="36"/>
+    <!-- cuello -->
+    <rect x="166" y="108" width="8" height="8"/>
+    <!-- torso -->
+    <rect x="160" y="116" width="20" height="56"/>
+    <!-- piernas -->
+    <rect x="160" y="172" width="8" height="44"/>
+    <rect x="172" y="172" width="8" height="44"/>
+    <!-- brazo entregando -->
+    <rect x="180" y="128" width="44" height="8"/>
+</g>
+
+<!-- PERSONA DERECHA (Brazos correctos en cintura) -->
+<g fill="#ffffff">
+    <!-- cabeza -->
+    <rect x="320" y="56" width="40" height="40"/>
+    <!-- cuello -->
+    <rect x="336" y="96" width="8" height="8"/>
+    <!-- torso -->
+    <rect x="328" y="104" width="24" height="76"/>
+
+    <!-- brazos formando triángulo -->
+    <!-- brazo izquierdo -->
+    <rect x="316" y="120" width="30" height="10"/>
+    <rect x="310" y="130" width="8" height="18"/>
+
+    <!-- brazo derecho -->
+    <rect x="352" y="120" width="10" height="10"/>
+    <rect x="360" y="130" width="8" height="18"/>
+
+    <!-- manos en la cintura -->
+    <rect x="316" y="148" width="12" height="8"/>
+    <rect x="352" y="148" width="12" height="8"/>
+
+    <!-- piernas -->
+    <rect x="328" y="180" width="10" height="56"/>
+    <rect x="342" y="180" width="10" height="56"/>
+</g>
+
+<!-- ⭐ ESTRELLA REAL (mismo tamaño que el punto) -->
+<g class="estrella">
+    <polygon
+        fill="#fde68a"
+        points="
+        228,144
+        232,154
+        244,154
+        234,160
+        238,170
+        228,164
+        218,170
+        222,160
+        212,154
+        224,154"
+    />
+</g>
+
+<!-- Punto en la frente -->
+<circle class="brillo" cx="340" cy="74" r="6" fill="#fde68a"/>
+
+</svg>
+</div>
+
+<div class="mensaje">
+    <p>
+    ✨ Una estrellita para ti por portarte bien y hacerme caso ✨ <br>
+    ¡¡¡ Posdata: Si no te cuidas te olvidas de tu hamburgueza !!!
+    </p>
+</div>
+
+</body>
+</html>
