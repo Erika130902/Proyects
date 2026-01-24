@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Cumpleaños Chusca</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .box-wrapper {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .box-wrapper.hidden {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+        }
+
+        .box {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(145deg, #ff6b6b, #ee5a6f);
+            border: 5px solid #fff;
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            transition: transform 0.3s;
+        }
+
+        .box:hover {
+            transform: scale(1.05);
+        }
+
+        .ribbon-vertical {
+            width: 50px;
+            height: 100%;
+            background: linear-gradient(90deg, #e6c200 0%, #ffd700 50%, #e6c200 100%);
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+
+        .ribbon-horizontal {
+            width: 100%;
+            height: 50px;
+            background: linear-gradient(180deg, #e6c200 0%, #ffd700 50%, #e6c200 100%);
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+
+        .bow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 6;
+        }
+
+        .bow-knot {
+            width: 35px;
+            height: 40px;
+            background: linear-gradient(145deg, #ffd700, #ffed4e);
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .bow-loop {
+            width: 55px;
+            height: 50px;
+            background: linear-gradient(145deg, #ffd700, #ffed4e);
+            border-radius: 60% 60% 60% 20%;
+            position: absolute;
+            top: -5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .bow-loop-left {
+            left: -50px;
+            transform: rotate(-25deg);
+        }
+
+        .bow-loop-right {
+            right: -50px;
+            transform: rotate(25deg) scaleX(-1);
+        }
+
+        .bow-tail {
+            width: 22px;
+            height: 45px;
+            background: linear-gradient(145deg, #ffd700, #ffed4e);
+            position: absolute;
+            top: 35px;
+            clip-path: polygon(50% 0%, 0% 0%, 35% 100%);
+        }
+
+        .bow-tail-left {
+            left: -18px;
+            transform: rotate(-12deg);
+        }
+
+        .bow-tail-right {
+            right: -18px;
+            transform: rotate(12deg);
+        }
+
+        .cat-scene {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .cat-scene.visible {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        /* Gato mejorado - estilo emoji */
+        .cat-container {
+            position: relative;
+            width: 140px;
+            margin: 0 auto;
+        }
+
+        .cat-head {
+            width: 140px;
+            height: 120px;
+            background: #f4a460;
+            border-radius: 70px 70px 60px 60px;
+            position: relative;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Orejas triangulares */
+        .cat-ear {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 50px solid #f4a460;
+            position: absolute;
+            top: -30px;
+            filter: drop-shadow(0 3px 8px rgba(0,0,0,0.2));
+        }
+
+        .cat-ear-left {
+            left: 12px;
+            transform: rotate(-12deg);
+        }
+
+        .cat-ear-right {
+            right: 12px;
+            transform: rotate(12deg);
+        }
+
+        .cat-ear-inner {
+            width: 0;
+            height: 0;
+            border-left: 14px solid transparent;
+            border-right: 14px solid transparent;
+            border-bottom: 25px solid #ffc08a;
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Ojos grandes y expresivos */
+        .cat-eyes {
+            display: flex;
+            justify-content: space-around;
+            padding: 0 25px;
+            margin-top: 35px;
+        }
+
+        .cat-eye {
+            width: 32px;
+            height: 36px;
+            background: #fff;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .cat-pupil {
+            width: 16px;
+            height: 20px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 8px;
+            left: 8px;
+        }
+
+        .cat-pupil-shine {
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+        }
+
+        /* Nariz y boca */
+        .cat-nose {
+            width: 20px;
+            height: 16px;
+            background: #ff9999;
+            border-radius: 50% 50% 50% 50%;
+            position: absolute;
+            top: 75px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .cat-mouth {
+            position: absolute;
+            top: 87px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .cat-mouth-left,
+        .cat-mouth-right {
+            width: 20px;
+            height: 14px;
+            border: 3px solid #333;
+            border-top: none;
+            border-radius: 0 0 100% 100%;
+            position: absolute;
+        }
+
+        .cat-mouth-left {
+            left: -20px;
+            border-right: none;
+        }
+
+        .cat-mouth-right {
+            right: -20px;
+            border-left: none;
+        }
+
+        /* Bigotes */
+        .cat-whiskers {
+            position: absolute;
+            top: 65px;
+            width: 100%;
+        }
+
+        .cat-whisker {
+            width: 50px;
+            height: 2.5px;
+            background: #333;
+            position: absolute;
+            border-radius: 2px;
+        }
+
+        .whisker-left-1 {
+            left: -45px;
+            top: 0;
+            transform: rotate(-8deg);
+        }
+
+        .whisker-left-2 {
+            left: -43px;
+            top: 12px;
+            transform: rotate(8deg);
+        }
+
+        .whisker-right-1 {
+            right: -45px;
+            top: 0;
+            transform: rotate(8deg);
+        }
+
+        .whisker-right-2 {
+            right: -43px;
+            top: 12px;
+            transform: rotate(-8deg);
+        }
+
+        /* Cuerpo del gato */
+        .cat-body {
+            width: 100px;
+            height: 70px;
+            background: #f4a460;
+            border-radius: 50px 50px 35px 35px;
+            position: absolute;
+            top: 100px;
+            left: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Patas */
+        .cat-paws {
+            display: flex;
+            justify-content: space-around;
+            padding: 0 15px;
+            position: absolute;
+            top: 150px;
+            width: 100px;
+            left: 20px;
+        }
+
+        .cat-paw {
+            width: 24px;
+            height: 30px;
+            background: #f4a460;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Cartel */
+        .sign {
+            width: 240px;
+            padding: 20px;
+            background: #fff;
+            border: 6px solid #ff6b6b;
+            border-radius: 18px;
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        .sign-text {
+            font-size: 26px;
+            font-weight: bold;
+            color: #ff6b6b;
+            text-align: center;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .sign-name {
+            font-size: 38px;
+            color: #764ba2;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+        }
+
+        .instruction {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 24px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            animation: bounce 2s infinite;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+
+        .instruction.hidden {
+            opacity: 0;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-15px); }
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" onclick="openBox()">
+        <div class="box-wrapper" id="boxWrapper">
+            <div class="box">
+                <div class="ribbon-vertical"></div>
+                <div class="ribbon-horizontal"></div>
+            </div>
+            <div class="box-lid">
+                <div class="bow">
+                    <div class="bow-loop bow-loop-left"></div>
+                    <div class="bow-knot">
+                        <div class="bow-tail bow-tail-left"></div>
+                        <div class="bow-tail bow-tail-right"></div>
+                    </div>
+                    <div class="bow-loop bow-loop-right"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cat-scene" id="catScene">
+            <div class="cat-container">
+                <div class="cat-head">
+                    <div class="cat-ear cat-ear-left">
+                        <div class="cat-ear-inner"></div>
+                    </div>
+                    <div class="cat-ear cat-ear-right">
+                        <div class="cat-ear-inner"></div>
+                    </div>
+                    
+                    <div class="cat-eyes">
+                        <div class="cat-eye">
+                            <div class="cat-pupil">
+                                <div class="cat-pupil-shine"></div>
+                            </div>
+                        </div>
+                        <div class="cat-eye">
+                            <div class="cat-pupil">
+                                <div class="cat-pupil-shine"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="cat-nose"></div>
+                    
+                    <div class="cat-mouth">
+                        <div class="cat-mouth-left"></div>
+                        <div class="cat-mouth-right"></div>
+                    </div>
+                    
+                    <div class="cat-whiskers">
+                        <div class="cat-whisker whisker-left-1"></div>
+                        <div class="cat-whisker whisker-left-2"></div>
+                        <div class="cat-whisker whisker-right-1"></div>
+                        <div class="cat-whisker whisker-right-2"></div>
+                    </div>
+                </div>
+                
+                <div class="cat-body"></div>
+                
+                <div class="cat-paws">
+                    <div class="cat-paw"></div>
+                    <div class="cat-paw"></div>
+                </div>
+            </div>
+            
+            <div class="sign">
+                <div class="sign-text">¡Feliz Cumpleaños!</div>
+                <div class="sign-name">Chusca</div>
+            </div>
+        </div>
+    </div>
+    <div class="instruction" id="instruction">👆 ¡Haz clic en la caja!</div>
+
+    <script>
+        let isOpened = false;
+
+        function openBox() {
+            if (isOpened) return;
+            isOpened = true;
+
+            const boxWrapper = document.getElementById('boxWrapper');
+            const catScene = document.getElementById('catScene');
+            const instruction = document.getElementById('instruction');
+
+            // Ocultar instrucción
+            instruction.classList.add('hidden');
+
+            // Desaparecer la caja
+            boxWrapper.classList.add('hidden');
+
+            // Aparecer el gato después de que la caja empiece a desaparecer
+            setTimeout(() => {
+                catScene.classList.add('visible');
+                
+                // Crear confeti
+                setTimeout(() => {
+                    for (let i = 0; i < 100; i++) {
+                        createConfetti();
+                    }
+                }, 300);
+            }, 300);
+        }
+
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = (Math.random() * 100) + '%';
+            confetti.style.top = '0';
+            
+            const colors = ['#ff6b6b', '#ffd700', '#4ecdc4', '#ff9a56', '#a8e6cf', '#ff6b9d', '#764ba2', '#f4a460', '#ffed4e'];
+            confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+            
+            const shapes = ['50%', '0'];
+            confetti.style.borderRadius = shapes[Math.floor(Math.random() * shapes.length)];
+            
+            const size = 8 + Math.random() * 10;
+            confetti.style.width = size + 'px';
+            confetti.style.height = size + 'px';
+            
+            confetti.style.animation = `confetti-fall ${2.5 + Math.random() * 2.5}s linear forwards`;
+            confetti.style.animationDelay = (Math.random() * 0.5) + 's';
+            
+            document.body.appendChild(confetti);
+
+            setTimeout(() => confetti.remove(), 6000);
+        }
+    </script>
+</body>
+</html>
