@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escalamiento de Atención - Selección de Plantilla</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .menu-container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .menu-header {
+            background: linear-gradient(135deg, #2dd4bf 0%, #14b8a6 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .menu-header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .menu-header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .menu-content {
+            padding: 50px 40px;
+        }
+        .plantilla-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        .plantilla-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+        .plantilla-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-color: #14b8a6;
+        }
+        .plantilla-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        .plantilla-card h2 {
+            color: #1e293b;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        .plantilla-card p {
+            color: #475569;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        .plantilla-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .plantilla-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+        }
+        .badge {
+            display: inline-block;
+            background: #fef08a;
+            color: #854d0e;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <div class="menu-header">
+            <h1>ESCALAMIENTO DE ATENCIÓN Y SOPORTE</h1>
+            <p>Selecciona la plantilla que deseas utilizar</p>
+        </div>
+        <div class="menu-content">
+            <div class="plantilla-grid">
+                <div class="plantilla-card">
+                    <div class="plantilla-icon">📝</div>
+                    <span class="badge">PLANTILLA SIN RESIDENTE</span>
+                    <h2>Gestores y Gerentes</h2>
+                    <p>Edita los campos:<br><br>
+                    • Gestor de servicios<br>
+                    • Gerente de Cuenta</p>
+                    <a href="/plantilla1" class="plantilla-btn">USAR ESTA PLANTILLA</a>
+                </div>
+                
+                <div class="plantilla-card">
+                    <div class="plantilla-icon">📝</div>
+                    <span class="badge">PLANTILLA CON RESIDENTE</span>
+                    <h2>Líderes, Responsables, Gestores y Gerentes</h2>
+                    <p>Edita los campos:<br><br>
+                    • Reesponsable de mesa<br>
+                    • Gestor de servicios<br>
+                    • Gerente de Cuenta</p>
+                    <a href="/plantilla2" class="plantilla-btn">USAR ESTA PLANTILLA</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

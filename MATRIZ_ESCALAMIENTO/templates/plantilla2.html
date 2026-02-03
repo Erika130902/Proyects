@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plantilla 3 - Con Residentes</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #2dd4bf 0%, #14b8a6 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .form-section {
+            background: #f8fafc;
+            padding: 30px;
+            border-bottom: 3px solid #e2e8f0;
+        }
+        .form-section h2 {
+            color: #1e293b;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        .form-section h3 {
+            color: #1e293b;
+            margin: 20px 0 10px 0;
+            font-size: 16px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .form-group { 
+            display: flex; 
+            flex-direction: column; 
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .form-group input {
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #14b8a6;
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+        }
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #14b8a6, transparent);
+            margin: 20px 0;
+        }
+        .row-label {
+            background: #fef08a;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #854d0e;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        .residente-item {
+            background: #e0f2fe;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            position: relative;
+            border: 2px solid #bae6fd;
+        }
+        .residente-header {
+            font-weight: bold;
+            color: #0369a1;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        .btn-agregar, .btn-eliminar {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        .btn-agregar {
+            background: #10b981;
+            color: white;
+            margin-top: 10px;
+        }
+        .btn-agregar:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+        .btn-eliminar {
+            background: #ef4444;
+            color: white;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+        .btn-eliminar:hover {
+            background: #dc2626;
+        }
+        .download-section {
+            padding: 30px;
+            background: #f0fdf4;
+            text-align: center;
+            border-bottom: 3px solid #e2e8f0;
+        }
+        .download-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+        .table-container { 
+            padding: 30px; 
+            overflow-x: auto; 
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        th {
+            background: #fef08a;
+            color: #1e293b;
+            padding: 15px 10px;
+            text-align: center;
+            font-weight: bold;
+            border: 1px solid #d4d4d8;
+            font-size: 13px;
+        }
+        td {
+            padding: 12px 10px;
+            border: 1px solid #d4d4d8;
+            text-align: center;
+            font-size: 13px;
+            background: white;
+        }
+        td:first-child {
+            background: #fef08a;
+            font-weight: bold;
+            color: #854d0e;
+        }
+        tr:hover td { 
+            background: #f1f5f9; 
+        }
+        tr:hover td:first-child { 
+            background: #fde047; 
+        }
+        .editable-cell {
+            background: #f0fdf4 !important;
+            color: #111312;
+        }
+        tr:hover .editable-cell { background: #dcfce7 !important; }
+        .email-link {
+            color: #0284c7;
+            text-decoration: none;
+            display: block;
+            margin: 2px 0;
+        }
+        .email-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">MATRIZ DE ESCALAMIENTO CON RESIDENTES</div>
+        
+        <div class="form-section">
+            <h2>Completar los datos</h2>
+            
+            <form id="dataForm" method="POST" action="/descargar2">
+                <!-- FILA 1: RESIDENTES -->
+                <div class="row-label">Datos de Residentes y Correos</div>
+                
+                <h3>Residentes:</h3>
+                <div id="residentes-container">
+                    <div class="residente-item">
+                        <div class="residente-header">Residente N°1</div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Nombre Residente:</label>
+                                <input type="text" name="residente_nombre[]" placeholder="Ej: Andre Monroy" value="" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Teléfono Residente:</label>
+                                <input type="text" name="residente_telefono[]" placeholder="Ej: 935 137 630" value="" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn-agregar" onclick="agregarResidente()">
+                    ➕ Agregar Otro Residente
+                </button>
+                
+                <h3>Correo Residentes:</h3>
+                <div class="form-group">
+                    <label>Nuevo correo del residente:</label>
+                    <input type="email" name="correo_residentes" id="correo_residentes" 
+                           placeholder="Ej: nuevocorreo@bitel.com.pe" 
+                           value="" required>
+                </div>
+                <p style="color: #64748b; font-size: 13px; margin-top: 8px;">
+                    Los demás correos se mantienen fijos: atc.corp@bitel.com.pe, nocservicedesk@bitel.com.pe, servicemanager.corp@bitel.com.pe
+                </p>
+
+                <div class="divider"></div>
+
+                <!-- GESTOR DE SERVICIOS -->
+                <div class="row-label">Gestor de Servicios</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nombre:</label>
+                        <input type="text" name="nombre2" id="nombre2" placeholder="Ej: Evonny Herrada" value="" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono:</label>
+                        <input type="text" name="telefono2" id="telefono2" placeholder="Ej: 918 928 290" value="" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Correo:</label>
+                        <input type="email" name="correo2" id="correo2" placeholder="Ej: evonny.herrada@bitel.com.pe" value="" required>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- FILA 3: GESTOR DE SERVICIOS -->
+                <div class="row-label">Gerente comercial</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nombre:</label>
+                        <input type="text" name="nombre3" id="nombre3" placeholder="Ej: Darwin Alcantara" value="" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono:</label>
+                        <input type="text" name="telefono3" id="telefono3" placeholder="Ej: 918 928 290" value="" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Correo:</label>
+                        <input type="email" name="correo3" id="correo3" placeholder="Ej: evonny.herrada@bitel.com.pe" value="" required>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="download-section">
+            <button class="download-btn" onclick="document.getElementById('dataForm').submit()">
+                DESCARGAR EN WORD
+            </button>
+        </div>
+
+        <!-- VISTA PREVIA DE LA TABLA -->
+        <div class="table-container">
+            <h3 style="text-align: center; margin-bottom: 20px; color: #1e293b;">Vista Previa</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nivel</th>
+                        <th>Tiempo transcurrido<br>desde ocurrido el<br>incidente</th>
+                        <th>Departamento<br>Responsable</th>
+                        <th>Cargo</th>
+                        <th>Nombre</th>
+                        <th>Teléfono</th>
+                        <th>Correo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Inmediato</td>
+                        <td>ATC</td>
+                        <td>Responsable Mesa de Servicios</td>
+                        <td>Responsable en Turno</td>
+                        <td class="editable-cell">
+                            <strong>Call Center:</strong><br>
+                            0 800 79079<br><br>
+                            <strong>Residentes:</strong><br>
+                            <span id="preview-residentes">------</span>
+                        </td>
+                        <td class="editable-cell">
+                            <strong>Dirigido:</strong><br>
+                            <a href="#" class="email-link">atc.corp@bitel.com.pe</a>
+                            <a href="#" id="preview-correo-residente" class="email-link">-</a>
+                            <strong>Copia:</strong><br>
+                            <a href="#" class="email-link">nocservicedesk@bitel.com.pe</a>
+                            <a href="#" class="email-link">servicemanager.corp@bitel.com.pe</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Inmediato</td>
+                        <td>NOC</td>
+                        <td>Líder de Turno</td>
+                        <td>Responsable en Turno</td>
+                        <td>930 989 898</td>
+                        <td><a href="mailto:nocservicedesk@bitel.com.pe" class="email-link">nocperu@viettel.com.vn</a></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>1hrs</td>
+                        <td>CORPORATIVO</td>
+                        <td>Gestor de Servicios</td>
+                        <td class="editable-cell" id="preview-nombre2">-</td>
+                        <td class="editable-cell" id="preview-telefono2">-</td>
+                        <td class="editable-cell"><a href="#" id="preview-correo2" class="email-link">-</a></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>2hrs</td>
+                        <td>CORPORATIVO</td>
+                        <td>Gerente de Cuenta</td>
+                        <td class="editable-cell" id="preview-nombre3">-</td>
+                        <td class="editable-cell" id="preview-telefono3">-</td>
+                        <td class="editable-cell"><a href="#" id="preview-correo3" class="email-link">-</a></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>3hrs</td>
+                        <td>CORPORATIVO</td>
+                        <td>Vice Director</td>
+                        <td>Dennis Laime</td>
+                        <td>930 800 080</td>
+                        <td><a href="mailto:nocservicedesk@bitel.com.pe" class="email-link">dennis.laime@bitel.com.pe</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let residenteCount = 1;
+        
+        // Agregar residente
+        function agregarResidente() {
+            residenteCount++;
+            const container = document.getElementById('residentes-container');
+            const nuevoResidente = document.createElement('div');
+            nuevoResidente.className = 'residente-item';
+            nuevoResidente.innerHTML = `
+                <button type="button" class="btn-eliminar" onclick="eliminarResidente(this)">✕ Eliminar</button>
+                <div class="residente-header">📋 Residente #${residenteCount}</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nombre Residente:</label>
+                        <input type="text" name="residente_nombre[]" placeholder="Ej: Glennie Chambergo" onchange="actualizarVistaPrevia()" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono Residente:</label>
+                        <input type="text" name="residente_telefono[]" placeholder="Ej: 928 048 620" onchange="actualizarVistaPrevia()" required>
+                    </div>
+                </div>
+            `;
+            container.appendChild(nuevoResidente);
+            actualizarVistaPrevia();
+        }
+        
+        // Eliminar residente
+        function eliminarResidente(btn) {
+            const container = document.getElementById('residentes-container');
+            const items = container.querySelectorAll('.residente-item');
+            
+            if (items.length > 1) {
+                btn.parentElement.remove();
+                residenteCount--;
+                // Renumerar
+                const remainingItems = container.querySelectorAll('.residente-item');
+                remainingItems.forEach((item, index) => {
+                    const header = item.querySelector('.residente-header');
+                    if (header) {
+                        header.textContent = `Residente #${index + 1}`;
+                    }
+                });
+                actualizarVistaPrevia();
+            } else {
+                alert('Debe haber al menos un residente');
+            }
+        }
+        
+        // Actualizar vista previa
+        function actualizarVistaPrevia() {
+            // Residentes
+            const nombres = document.querySelectorAll('input[name="residente_nombre[]"]');
+            const telefonos = document.querySelectorAll('input[name="residente_telefono[]"]');
+            let residentesHTML = '';
+            
+            nombres.forEach((input, index) => {
+                const nombre = input.value || `Residente ${index + 1}`;
+                const telefono = telefonos[index]?.value || '000 000 000';
+                residentesHTML += `${nombre}<br>${telefono}<br>`;
+                if (index < nombres.length - 1) residentesHTML += '<br>';
+            });
+            
+            document.getElementById('preview-residentes').innerHTML = residentesHTML || '(Ingresa datos)';
+            
+            // Correo residentes
+            const correoResidentes = document.getElementById('correo_residentes').value;
+            document.getElementById('preview-correo-residente').textContent = correoResidentes || 'residentes.essalud@bitel.com.pe';
+            
+            // Fila 3
+            document.getElementById('preview-nombre2').textContent = document.getElementById('nombre2').value || '-';
+            document.getElementById('preview-telefono2').textContent = document.getElementById('telefono2').value || '-';
+            document.getElementById('preview-correo2').textContent = document.getElementById('correo2').value || '-';
+            
+            // Fila 4
+            document.getElementById('preview-nombre3').textContent = document.getElementById('nombre3').value || '-';
+            document.getElementById('preview-telefono3').textContent = document.getElementById('telefono3').value || '-';
+            document.getElementById('preview-correo3').textContent = document.getElementById('correo3').value || '-';
+        }
+        
+        // Event listeners para actualizar en tiempo real lo datos
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('input', actualizarVistaPrevia);
+                input.addEventListener('change', actualizarVistaPrevia);
+            });
+            
+            actualizarVistaPrevia();
+        });
+    </script>
+</body>
+</html>
